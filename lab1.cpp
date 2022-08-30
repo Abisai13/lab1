@@ -17,17 +17,19 @@ using namespace std;
 #include <X11/keysym.h>
 #include <GL/glx.h>
 
-
 //some structures
 
 class Global {
 public:
-	int xres, yres;
-	float w;
-	float dir;
-	float pos[2];
-	Global();
+    int xres, yres;
+    float w;
+    float dir;
+    float pos[2];
+    Global();
+    int color;
+    float opacity;
 } g;
+
 
 class X11_wrapper {
 private:
@@ -86,6 +88,8 @@ Global::Global()
 	dir = 25.0f;
 	pos[0] = 0.0f + w;
 	pos[1] = g.yres / 2.0f;
+	color = 150;
+	opacity = 1;
 }
 
 X11_wrapper::~X11_wrapper()
@@ -250,12 +254,24 @@ void physics()
 {
     g.pos[0] += g.dir;
     if  (g.pos[0] >= (g.xres - g.w)) {
-    	    g.pos[0] = (g.xres - g.w);
-    	    g.dir = -g.dir;
+            g.pos[0] = (g.xres - g.w);
+            g.dir = -g.dir;
+            if (g.color <= 225) {
+                g.color = (g.color + 20);
+            }
     }
     if (g.pos[0] <- g.w) {
-	    g.pos[0] = g.w;
-	    g.dir = -g.dir;
+        g.pos[0] = g.w;
+        g.dir = -g.dir;
+        if (g.color <=225) {
+            g.color = (g.color + 20);
+        }
+    }
+    else {
+            g.color = (g.color - 10);
+    }
+    while ((g.pos[0] >= (g.xres - g.w)) && (g.pos[0] <- g.w)) {
+        g.opacity = 0;
     }
 }
 
